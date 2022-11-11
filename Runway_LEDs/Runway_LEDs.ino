@@ -11,7 +11,7 @@
 
 #define BRIGHTNESS_FRONT 75
 #define BRIGHTNESS_BACK 75
-#define BRIGHTNESS_SIDES 50
+#define BRIGHTNESS_SIDES 75
 
 // Which pin on the Arduino is connected to the NeoPixels?
 #define PIN_FRONT        21 // On Trinket or Gemma, suggest changing this to 1
@@ -36,6 +36,8 @@ void setup() {
 #endif
   // END of Trinket-specific code.
 
+  Serial.begin(9600);
+
   pixels_front.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   pixels_front.show();    
    pixels_front.setBrightness(BRIGHTNESS_FRONT);
@@ -55,6 +57,8 @@ void setup() {
   patternSides();
 }
 
+unsigned long previousMillis, previousMillisC = 0;
+unsigned long previousMillisStartAnim = 0;
 void loop() {
   //patternSides();
   animationBackFront();
@@ -62,6 +66,27 @@ void loop() {
 //testFront();
 //testSides();
 //testBack();
+
+unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= 100) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+
+     int LEDbrightness = map(analogRead(A0), 0, 1200, 0, 255);
+    //Serial.println(LEDbrightness);
+
+    int ledBriSides = LEDbrightness - 20;
+
+      pixels_side.setBrightness(constrain(LEDbrightness, 0, 255));
+      pixels_back.setBrightness(constrain(LEDbrightness, 0, 255));
+      pixels_front.setBrightness(constrain(LEDbrightness, 0, 255));
+      pixels_side.show();
+
+      Serial.println(constrain(LEDbrightness, 0, 255));
+
+
+  }
 }
 
 void clearAll(){
