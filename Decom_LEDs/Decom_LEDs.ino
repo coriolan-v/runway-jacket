@@ -46,7 +46,7 @@ void setup() {
 
 void loop()
 {
-    //checkBrightness();
+    checkBrightness();
     //currentPalette = ForestColors_p;           currentBlending = LINEARBLEND; 
     ChangePalettePeriodically();
     
@@ -84,9 +84,11 @@ void checkBrightness()
   }
 }
 
+uint8_t brightness = BRIGHTNESS;
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
 {
-    uint8_t brightness = 255;
+    
+    brightness = LEDbrightness;
     
     for( int i = 0; i < NUM_LEDS_FRONT; i++) {
         ledsFront[i] = ColorFromPalette( currentPalette, colorIndex, brightness, currentBlending);
