@@ -32,9 +32,10 @@ extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 void setup() {
     //delay( 3000 ); // power-up safety delay
     Serial.begin(9600);
+     FastLED.addLeds<DOTSTAR, LED_PIN_BACK_DATA, LED_PIN_BACK_CLOCK, GBR>(ledsBack, NUM_LEDS_BACK);
     FastLED.addLeds<WS2811, LED_PIN_FRONT, COLOR_ORDER>(ledsFront, NUM_LEDS_FRONT).setCorrection( TypicalLEDStrip );
     FastLED.addLeds<WS2811, LED_PIN_SIDES, RGB>(ledsSideRGBW, getRGBWsize(NUM_LEDS_SIDES));
-    FastLED.addLeds<DOTSTAR, LED_PIN_BACK_DATA, LED_PIN_BACK_CLOCK, GRB>(ledsBack, NUM_LEDS_BACK);
+   
     
     FastLED.setBrightness(BRIGHTNESS );
     
@@ -46,7 +47,7 @@ void setup() {
 void loop()
 {
     //checkBrightness();
-//currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; 
+    //currentPalette = ForestColors_p;           currentBlending = LINEARBLEND; 
     ChangePalettePeriodically();
     
     static uint8_t startIndex = 0;
@@ -113,11 +114,18 @@ void ChangePalettePeriodically()
 {
   
     uint8_t secondHand = (millis() / 1000) % 60;
-    static uint8_t lastSecond = 99;
+    static uint8_t lastSecond = 59;
     
     if( lastSecond != secondHand) {
         lastSecond = secondHand;
-        if( secondHand ==  0)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
+       // if( secondHand ==  0)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
+        if( secondHand ==  0)  { currentPalette = PartyColors_p;         currentBlending = LINEARBLEND; }
+        //if( secondHand ==  10)  { currentPalette = OceanColors_p;         currentBlending = LINEARBLEND; }
+        if( secondHand ==  30)  { currentPalette = LavaColors_p;         currentBlending = LINEARBLEND; }
+        //if( secondHand ==  20)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
+        //if( secondHand ==  25)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
+        //if( secondHand ==  30)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
+        //if( secondHand ==  35)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
 //        if( secondHand == 10)  { currentPalette = RainbowStripeColors_p;   currentBlending = NOBLEND;  }
 //        if( secondHand == 15)  { currentPalette = RainbowStripeColors_p;   currentBlending = LINEARBLEND; }
 //        if( secondHand == 20)  { SetupPurpleAndGreenPalette();             currentBlending = LINEARBLEND; }
@@ -132,7 +140,7 @@ void ChangePalettePeriodically()
     }
 
     
-       currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; 
+      // currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; 
 }
 
 // This function fills the palette with totally random colors.
